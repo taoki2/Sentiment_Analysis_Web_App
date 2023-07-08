@@ -40,14 +40,18 @@ df.isnull().sum()
 
 # Descriptive statistics of the dataset
 df.describe()
-
+'''
 # Plot distribution of ratings
 sns.displot(df, x='rating', discrete=True)
 
 # Plot distribution of review sentiment
 sns.displot(df, x='label', discrete=True, bins=[0,1])
+
+'''
 X = df.drop(['rating', 'label'], axis=1)
 y = df.drop(['rating', 'review'], axis=1)
+
+
 
 # Balance classes
 print(X.shape, y.shape)
@@ -167,4 +171,4 @@ def post_form():
     return render_template('index.html', variable=output)
 
 if __name__ == "__main__":
-    app.run(debug=True, use_reloader=False)
+    app.run(debug=False, use_reloader=False)
