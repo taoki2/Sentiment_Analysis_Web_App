@@ -82,7 +82,7 @@ def clean_text(text):
     remove_punc = ''.join(remove_punc)
     return remove_punc.lower()
 
-'''
+
 # Clean text in reviews
 df['review'] = df['review'].apply(clean_text)
 df.head(10)
@@ -98,6 +98,7 @@ X_train_bow = tfidf_vec.fit_transform(X_train)
 X_test_bow = tfidf_vec.transform(X_test)
 print(X_train_bow.shape, X_test_bow.shape)
 
+'''
 
 # Build the support vector machine (SVM) model
 model_svm = svm.SVC(C=8.0, kernel='linear')
