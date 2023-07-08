@@ -82,6 +82,7 @@ def clean_text(text):
     remove_punc = ''.join(remove_punc)
     return remove_punc.lower()
 
+'''
 # Clean text in reviews
 df['review'] = df['review'].apply(clean_text)
 df.head(10)
@@ -97,7 +98,7 @@ X_train_bow = tfidf_vec.fit_transform(X_train)
 X_test_bow = tfidf_vec.transform(X_test)
 print(X_train_bow.shape, X_test_bow.shape)
 
-'''
+
 # Build the support vector machine (SVM) model
 model_svm = svm.SVC(C=8.0, kernel='linear')
 model_svm.fit(X_train_bow, y_train.ravel())
@@ -115,7 +116,7 @@ svc = svm.SVC()
 clf = GridSearchCV(svc, parameters, cv=10, n_jobs=-1)
 clf.fit(X_train_bow, y_train.ravel())
 print('Best parameters: ', clf.best_params_)
-'''
+
 
 # Build new model with parameters identified from GridSearch
 model_svm = svm.SVC(C=1.0, kernel='rbf')
@@ -132,6 +133,8 @@ plt.show()
 
 # Save the model
 pickle.dump(model_svm, open('model_svm.pkl', 'wb'))
+
+'''
 
 # Flask app
 app = Flask(__name__)
