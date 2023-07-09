@@ -25,7 +25,7 @@ from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report, ConfusionMatrixDisplay
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, url_for
 import pickle
 
 '''
@@ -50,13 +50,13 @@ df.describe()
 sns.displot(df, x='rating', discrete=True)
 
 # Save the plot
-plt.savefig("img/plot1.jpg", dpi=300)
+plt.savefig("static/plot1.jpg", dpi=300)
 
 # Plot distribution of review sentiment
 sns.displot(df, x='label', discrete=True, bins=[0,1])
 
 # Save the plot
-plt.savefig("img/plot2.jpg", dpi=300)
+plt.savefig("static/plot2.jpg", dpi=300)
 
 X = df.drop(['rating', 'label'], axis=1)
 y = df.drop(['rating', 'review'], axis=1)
@@ -107,7 +107,7 @@ plt.axis("off")
 plt.show()
 
 # Save the word cloud
-wordcloud.to_file("img/wordcloud.png")
+wordcloud.to_file("static/wordcloud.png")
 
 # Split the data into training and testing sets
 X = df['review']
@@ -172,6 +172,7 @@ def load_model():
 
 load_model()
 
+#@app.route('/',methods=['GET'])
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -182,7 +183,7 @@ def predict_text(text):
     prediction = loaded_model.predict(predict_bow)
     return str(prediction)
 
-@app.route('/',methods=['POST'])
+@app.route('/',methods=['POST', 'GET'])
 def post_form():
     text = request.form['text']
     text2 = text.lower()

@@ -1,4 +1,4 @@
-<!-- html code from https://www.milindsoorya.com/blog/sentiment-analysis-using-python -->
+<!-- html reference code from https://www.milindsoorya.com/blog/sentiment-analysis-using-python -->
 
 <!DOCTYPE html>
 <html>
@@ -92,16 +92,18 @@
         <br />
         <p class="desc">Review: {{ review }}</p>
         <p id="predict">Sentiment: {{ variable }}</p>
+        <br>
+        <br>
+        <p id="predict">Visualizations of the Review Dataset</p>
       </div>
     </div>
     <div class="flex-container">
-
-        <div><img src="../img/plot1.jpg" alt="Distribution of Review Ratings" width="200px"><p>Distribution of Review Ratings</p></div>
-        <div><img src="../img/plot2.jpg" alt="Distribution of Review Sentiment" width="200px"><p>Distribution of Review Sentiment</p></div>
-        <div><img src="../img/wordcloud.png" alt="Word Cloud of Review Text" width="200px" height="200px"><p>Word Cloud of Review Text</p></div>
+        <div><img src="../static/plot1.jpg" alt="Distribution of Review Ratings" width="200px"><p>Distribution of Review Ratings</p></div>
+        <div><img src="../static/plot2.jpg" alt="Distribution of Review Sentiment" width="200px"><p>Distribution of Review Sentiment</p></div>
+        <div><img src="../static/wordcloud.png" alt="Word Cloud of Review Text" width="200px" height="200px"><p>Word Cloud of Review Text</p></div>
 <!--
-      <div><img src="{{url_for('img', filename='wordcloud.png')}}align="middle" /></div>
-    -->
+      <div><static src="{{url_for('static', filename='wordcloud.png')}}" /></div>
+-->
     </div>
   </body>
 </html>
