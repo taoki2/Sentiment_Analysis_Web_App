@@ -25,8 +25,11 @@ from sklearn.metrics import classification_report, ConfusionMatrixDisplay
 from flask import Flask, request, jsonify, render_template
 import pickle
 
+'''
+
 # Import dataset
-url = 'https://raw.githubusercontent.com/taoki2/C964/main/data.csv'
+weburl = 'https://raw.githubusercontent.com/taoki2/C964/main/data.csv'
+url = 'data.csv'
 df=pd.read_csv(url)
 
 # Convert rating to int data type
@@ -40,14 +43,14 @@ df.isnull().sum()
 
 # Descriptive statistics of the dataset
 df.describe()
-'''
+
 # Plot distribution of ratings
 sns.displot(df, x='rating', discrete=True)
 
 # Plot distribution of review sentiment
 sns.displot(df, x='label', discrete=True, bins=[0,1])
 
-'''
+
 X = df.drop(['rating', 'label'], axis=1)
 y = df.drop(['rating', 'review'], axis=1)
 
@@ -102,7 +105,9 @@ X_train_bow = tfidf_vec.fit_transform(X_train)
 X_test_bow = tfidf_vec.transform(X_test)
 print(X_train_bow.shape, X_test_bow.shape)
 
-'''
+# Save vectorization
+pickle.dump(tfidf_vec, open('vectorizer.pkl', 'wb'))
+
 
 # Build the support vector machine (SVM) model
 model_svm = svm.SVC(C=8.0, kernel='linear')
@@ -146,7 +151,9 @@ app = Flask(__name__)
 
 def load_model():
     global loaded_model
+    global loaded_vec
     loaded_model = pickle.load(open('model_svm.pkl', 'rb'))
+    loaded_vec = pickle.load(open('vectorizer.pkl', 'rb'))
 
 load_model()
 
@@ -156,7 +163,7 @@ def home():
 
 def predict_text(text):
     text = [text]
-    predict_bow = tfidf_vec.transform(text)
+    predict_bow = loaded_vec.transform(text)
     prediction = loaded_model.predict(predict_bow)
     return str(prediction)
 
