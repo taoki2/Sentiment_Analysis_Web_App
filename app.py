@@ -191,7 +191,7 @@ def post_form():
         output = "Negative"
     else:
         output = "Positive"
-    return render_template('index.html', variable=output)
+    return render_template('index.html', variable=output, review=text)
 
 if __name__ == "__main__":
     app.run(debug=False, use_reloader=False)
