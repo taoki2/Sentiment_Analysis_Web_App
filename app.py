@@ -184,13 +184,14 @@ def predict_text(text):
 
 @app.route('/',methods=['POST'])
 def post_form():
-    text = request.form['text'].lower()
-    result = predict_text(text)
+    text = request.form['text']
+    text2 = text.lower()
+    result = predict_text(text2)
     if result == "[0]":
         output = "Negative"
     else:
         output = "Positive"
-    return render_template('index.html', variable=output)
+    return render_template('index.html', variable=output, review=text)
 
 if __name__ == "__main__":
     app.run(debug=False, use_reloader=False)

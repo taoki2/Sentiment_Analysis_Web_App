@@ -46,7 +46,7 @@
         text-align: center;
       }
 
-      #demo {
+      #predict {
         color: #111;
         font-family: 'Helvetica Neue', sans-serif;
         font-size: 22px;
@@ -56,6 +56,12 @@
       }
 
       .form-div {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
+
+      .flex-container {
         display: flex;
         justify-content: space-around;
         align-items: center;
@@ -84,9 +90,14 @@
         </form>
         <br />
         <br />
-
-        <p id="demo">{{ variable }}</p>
+        <p class="desc">Review: {{ review }}</p>
+        <p id="predict">Sentiment: {{ variable }}</p>
       </div>
+    </div>
+    <div class="flex-container">
+        <div><img src="/img/plot1.jpg" alt="Distribution of Review Ratings" width="200px"><p>Distribution of Review Ratings</p></div>
+        <div><img src="/img/plot2.jpg" alt="Distribution of Review Sentiment" width="200px"><p>Distribution of Review Sentiment</p></div>
+        <div><img src="/img/wordcloud.png" alt="Word Cloud of Review Text" width="200px" height="200px"><p>Word Cloud of Review Text</p></div>
     </div>
   </body>
 </html>
