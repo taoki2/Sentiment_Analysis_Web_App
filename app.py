@@ -4,6 +4,9 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import re
 import numpy as np
+from os import path
+from PIL import Image
+from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from sklearn.model_selection import train_test_split
 import nltk, random
 import ssl
@@ -26,7 +29,6 @@ from flask import Flask, request, jsonify, render_template
 import pickle
 
 '''
-
 # Import dataset
 weburl = 'https://raw.githubusercontent.com/taoki2/C964/main/data.csv'
 url = 'data.csv'
@@ -47,14 +49,17 @@ df.describe()
 # Plot distribution of ratings
 sns.displot(df, x='rating', discrete=True)
 
+# Save the plot
+plt.savefig("img/plot1.jpg", dpi=300)
+
 # Plot distribution of review sentiment
 sns.displot(df, x='label', discrete=True, bins=[0,1])
 
+# Save the plot
+plt.savefig("img/plot2.jpg", dpi=300)
 
 X = df.drop(['rating', 'label'], axis=1)
 y = df.drop(['rating', 'review'], axis=1)
-
-
 
 # Balance classes
 print(X.shape, y.shape)
@@ -93,6 +98,16 @@ def clean_text(text):
 # Clean text in reviews
 df['review'] = df['review'].apply(clean_text)
 df.head(10)
+
+# Create word cloud of review texts
+wordcloud = WordCloud(max_font_size=50, max_words=100, background_color="white").generate(' '.join(df['review']))
+plt.figure()
+plt.imshow(wordcloud, interpolation="bilinear")
+plt.axis("off")
+plt.show()
+
+# Save the word cloud
+wordcloud.to_file("img/wordcloud.png")
 
 # Split the data into training and testing sets
 X = df['review']
