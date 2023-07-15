@@ -99,7 +99,29 @@ def clean_text(text):
 df['review'] = df['review'].apply(clean_text)
 df.head(10)
 
-# Create word cloud of review texts
+# Create word cloud of positive reviews
+df_pos = df.loc[df['label'] == 1]
+wordcloud = WordCloud(max_font_size=50, max_words=100, background_color="white").generate(' '.join(df_pos['review']))
+plt.figure()
+plt.imshow(wordcloud, interpolation="bilinear")
+plt.axis("off")
+plt.show()
+
+# Save the word cloud
+wordcloud.to_file("static/wordcloud_pos.png")
+
+# Create word cloud of negative reviews
+df_neg = df.loc[df['label'] == 0]
+wordcloud = WordCloud(max_font_size=50, max_words=100, background_color="white").generate(' '.join(df_neg['review']))
+plt.figure()
+plt.imshow(wordcloud, interpolation="bilinear")
+plt.axis("off")
+plt.show()
+
+# Save the word cloud
+wordcloud.to_file("static/wordcloud_neg.png")
+
+# Create word cloud of all reviews
 wordcloud = WordCloud(max_font_size=50, max_words=100, background_color="white").generate(' '.join(df['review']))
 plt.figure()
 plt.imshow(wordcloud, interpolation="bilinear")
@@ -123,7 +145,6 @@ print(X_train_bow.shape, X_test_bow.shape)
 # Save vectorization
 pickle.dump(tfidf_vec, open('vectorizer.pkl', 'wb'))
 
-
 # Build the support vector machine (SVM) model
 model_svm = svm.SVC(C=8.0, kernel='linear')
 model_svm.fit(X_train_bow, y_train.ravel())
@@ -142,7 +163,6 @@ clf = GridSearchCV(svc, parameters, cv=10, n_jobs=-1)
 clf.fit(X_train_bow, y_train.ravel())
 print('Best parameters: ', clf.best_params_)
 
-
 # Build new model with parameters identified from GridSearch
 model_svm = svm.SVC(C=1.0, kernel='rbf')
 model_svm.fit(X_train_bow, y_train.ravel())
@@ -158,7 +178,6 @@ plt.show()
 
 # Save the model
 pickle.dump(model_svm, open('model_svm.pkl', 'wb'))
-
 '''
 
 # Flask app
