@@ -94,10 +94,9 @@ def clean_text(text):
     remove_punc = ''.join(remove_punc)
     return remove_punc.lower()
 
-
 # Clean text in reviews
 df['review'] = df['review'].apply(clean_text)
-df.head(10)
+#df.head(10)
 
 # Create word cloud of positive reviews
 df_pos = df.loc[df['label'] == 1]
@@ -140,7 +139,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 tfidf_vec = TfidfVectorizer(min_df = 10, token_pattern = r'[a-zA-Z]+')
 X_train_bow = tfidf_vec.fit_transform(X_train)
 X_test_bow = tfidf_vec.transform(X_test)
-print(X_train_bow.shape, X_test_bow.shape)
+#print(X_train_bow.shape, X_test_bow.shape)
 
 # Save vectorization
 pickle.dump(tfidf_vec, open('vectorizer.pkl', 'wb'))
@@ -168,6 +167,7 @@ model_svm = svm.SVC(C=1.0, kernel='rbf')
 model_svm.fit(X_train_bow, y_train.ravel())
 
 # New model's accuracy
+print("SVM model accuracy: ", end = "")
 print(model_svm.score(X_test_bow, y_test))
 
 # Confusion matrix
@@ -178,8 +178,8 @@ plt.show()
 
 # Save the model
 pickle.dump(model_svm, open('model_svm.pkl', 'wb'))
-'''
 
+'''
 # Flask app
 app = Flask(__name__)
 
